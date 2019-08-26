@@ -9,8 +9,8 @@ export default function NoteSideBar (props){
         folder.id === note.folderId)
     return (
         <div className="sidebar-container">
-            <ul>
-                <li>{folder.name}</li>
+            <ul className="folder-list">
+                <li className="selected-folder">{folder.name}</li>
             </ul>
         </div>
     )    

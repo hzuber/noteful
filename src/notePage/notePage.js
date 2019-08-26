@@ -12,18 +12,20 @@ class NotePage extends Component{
     
     return (
         <article className="Note">
-            <header>
+            <header className="note-header">
                 <button 
                     className="go-back-btn"
                     onClick = {this.props.onGoBack}>
                     Go Back
                 </button>
-                <h3>{note.name}</h3>
-                <p>Modified on &nbsp;
-                    <Moment format = "LL">
-                       {note.modified}
-                    </Moment>
-                </p>
+                <div className="note-header-text">
+                    <h3>{note.name}</h3>
+                    <p>Modified on &nbsp;
+                        <Moment format = "LL">
+                        {note.modified}
+                        </Moment>
+                    </p>
+                </div>
                 <button className='delete-btn'>
                     Delete
                 </button>

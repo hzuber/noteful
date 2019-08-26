@@ -14,15 +14,16 @@
     border-left: 1px solid grey;
     border-radius: 5px 0px 0px 5px;
     margin-right: 0px;
+    margin-left: 30%;
     font-size: 20px;
     font-weight: bolder;
-    background-color: rgb(255, 217, 0);
+    background-color: #A2CC66;
+    color: rgb(0, 15, 73);
 }
 .NavLink{
     color: rgb(0, 15, 73);
 }
 .activeNavLink > .folder{
-    color: rgb(255, 217, 0);
     font-style: italic;
-    background-color: rgb(0, 15, 73);
+    background-color: #67991F;
 }

@@ -1,0 +1,16 @@
+.selected-folder{
+    text-align: left;
+    padding: 10px 25px 10px 15px;
+    margin: 15px;
+    text-decoration: none !important;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-left: 1px solid grey;
+    border-radius: 5px 0px 0px 5px;
+    margin-right: 0px;
+    margin-left: 30%;
+    font-size: 20px;
+    font-weight: bolder;
+    font-style: italic;
+    background-color: #67991F;
+}

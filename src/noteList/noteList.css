@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .note-list{
     list-style: none;
     padding: 0px;
@@ -6,12 +9,14 @@
     flex-wrap: wrap;
 }
 .note{
-    color: black;
+    color: rgb(1, 15, 71);
     border: solid 1px grey;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     margin: 5px;
     background-color: rgb(247, 233, 158);
+    padding: 5px;
+    box-shadow: 2px 2px 5px #3d3d3da8;
 }
 .add-note-btn{
     background-color: rgb(247, 233, 158);

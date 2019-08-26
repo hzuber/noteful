@@ -1,26 +1,33 @@
 .App {
   text-align: center;
   display: flex;
+  align-items: stretch;
 }
 
 .App-header {
   text-decoration: none;
-  background-color: rgb(247, 233, 158);
+  background-color: rgb(31, 33, 131);
   font-size: calc(10px + 2vmin);
   border: 1px solid grey;
 }
 
 .header-text{
   text-decoration: none;
-  color: rgb(12, 18, 43);
+  color: white;
 }
 
 .App-sidebar{
   width: 25%;
   min-width: 150px;
-  margin-top: 100px;
+  margin-top: 130px;
 }
 .App-main{
   border: 1px solid grey;
   width: 75%;
+  margin: 20px 20px 20px 0px;
+}
+
+.App-content{
+  background: white;
+  padding: 20px;
 }
