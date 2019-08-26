@@ -2,6 +2,7 @@ import React from 'react';
 import NOTES from '../noteStore/noteStore';
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom';
+import './noteList.css';
 
 export default function NoteList(props){
     const notes= props.match.params.folderId ?
@@ -12,8 +13,10 @@ export default function NoteList(props){
         <>
             <ul className="note-list">
                 {notes.map((note)=>
-                    <Link to = {`/note/${note.id}`}>
-                        <li key={note.id}>
+                    <Link 
+                        to = {`/note/${note.id}`}
+                        style={{ textDecoration: 'none' }}>
+                        <li key={note.id} className="note">
                             <h4>{note.name}</h4>
                             <p>Modified on &nbsp;
                                 <Moment format = "LL">
@@ -23,7 +26,7 @@ export default function NoteList(props){
                         </li>
                     </ Link>
                 )}
-                <button className="add-note-btn">
+                <button className="add-note-btn note">
                     Add note
                 </button>
             </ul>

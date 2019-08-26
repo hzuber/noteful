@@ -1,0 +1,20 @@
+.note-list{
+    list-style: none;
+    padding: 0px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.note{
+    color: black;
+    border: solid 1px grey;
+    height: 200px;
+    width: 200px;
+    margin: 5px;
+    background-color: rgb(247, 233, 158);
+}
+.add-note-btn{
+    background-color: rgb(247, 233, 158);
+    font-size: 18px;
+    font-weight: bolder;
+}

@@ -11,7 +11,6 @@ export default function NoteSideBar (props){
         <div className="sidebar-container">
             <ul>
                 <li>{folder.name}</li>
-                <li>Add Folder</li>
             </ul>
         </div>
     )    
