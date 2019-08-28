@@ -14,7 +14,7 @@ class App extends Component {
     error: null,
   };
 
-  deleteNote(noteId) {
+  deleteNote = (noteId) => {
     const newNotes = this.state.notes.filter(
       note => note.id !== noteId)
     this.setState({
