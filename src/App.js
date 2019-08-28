@@ -4,7 +4,7 @@ import './App.css';
 import Notepage from './notePage/notePage';
 import Sidebar from './Sidebar/sidebar';
 import NoteList from './noteList/noteList';
-//import NoteSideBar from './noteSidebar/noteSidebar';
+import NoteSideBar from './noteSidebar/noteSidebar';
 import NotefulContext from './notefulContext';
 
 class App extends Component {
@@ -53,6 +53,7 @@ class App extends Component {
           <div className="App-sidebar">
             <Route exact path='/' component={Sidebar} />
             <Route path='/folder/:folderId' component={Sidebar} />
+            <Route path='/note/:noteId' component={NoteSideBar} />
           </div>
           <main className="App-main">
             <header className="App-header">

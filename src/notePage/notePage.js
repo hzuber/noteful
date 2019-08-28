@@ -16,7 +16,7 @@ class NotePage extends Component {
         const {notes=[]} = this.context;
         const note = notes.find(
             note => note.id === this.props.match.params.noteId);
-        console.log('note from delete fetch ' + note.name)
+        console.log('note.name from top of fetch: ' + note.name)
 
         fetch(`http://localhost:9090/notes/${note.id}`, {
             method: 'DELETE',
@@ -30,13 +30,11 @@ class NotePage extends Component {
                         .then(e => Promise.reject(e))
                 return res.json()
             })
-            .then(() => {
-                console.log('before ' + note.name)
-                this.context.deleteNote(note.id);
-            })
             .then(()=> {
-                console.log('after ' + note.name)
                 this.props.history.push('/');
+            })
+            .then(() => {
+                this.context.deleteNote(note.id);
             })
             .catch(error => {
                 console.error(error)
@@ -45,10 +43,9 @@ class NotePage extends Component {
     
     render() {
         const {notes=[]} = this.context;
-        console.log(notes);
+        console.log('render the notePage');
         const note = notes.find(
             note => note.id === this.props.match.params.noteId);
-        console.log(note);
         return (
             <article className="Note">
                 <header className="note-header">

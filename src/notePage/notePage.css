@@ -13,6 +13,7 @@
     align-self: center;
 }
 .go-back-btn{
+    min-width: 90px;
     width: 20%;
     align-self: flex-start;
     padding: 10px;
@@ -27,6 +28,7 @@
     width: 60%;
 }
 .delete-btn{
+    min-width: 90px;
     width: 20%;
     align-self: flex-start;
     padding: 10px;
