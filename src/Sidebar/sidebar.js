@@ -1,28 +1,33 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import './sidebar.css';
-import NOTES from '../noteStore/noteStore.js';
+import NotefulContext from '../notefulContext';
 
-export default function SideBar (){
-    return (
-        <div className="sidebar-container">
-            <ul className="folder-list">
-                {NOTES.folders.map(folder =>
-                    <NavLink 
-                        to = {`/folder/${folder.id}`} 
-                        style={{ textDecoration: 'none' }}
-                        activeClassName="activeNavLink"
-                        className="NavLink">
-                        <li 
+export default class SideBar extends Component {
+    static contextType = NotefulContext;
+
+    render() {
+        const { folders } = this.context
+        return (
+            <div className="sidebar-container">
+                <ul className="folder-list">
+                    {folders.map(folder =>
+                        <NavLink
                             key={folder.id}
-                            className="folder">
-                            {folder.name}
-                        </li>
-                    </NavLink>
+                            to={`/folder/${folder.id}`}
+                            style={{ textDecoration: 'none' }}
+                            activeClassName="activeNavLink"
+                            className="NavLink">
+                            <li
+                                className="folder">
+                                {folder.name}
+                            </li>
+                        </NavLink>
                     )
-                }
-                <li className="folder">+ Add Folder</li>
-            </ul>
-        </div>
-    )    
+                    }
+                    <li className="folder">+ Add Folder</li>
+                </ul>
+            </div>
+        )
+    }
 }

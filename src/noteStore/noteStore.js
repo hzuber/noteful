@@ -1,3 +1,5 @@
+import React, {Component} from 'react';
+
 export default {
     "folders": [
       {
@@ -113,4 +115,35 @@ export default {
         "content": "Veritatis porro minima perspiciatis. Repellat veniam quo iste ut. Iusto voluptas quae quibusdam. Odit neque iusto cupiditate iste quam. Fuga itaque aut praesentium ullam saepe ut et vero.\n \rQuisquam doloremque molestiae. Enim rerum dolorem et velit itaque magnam laborum. Aut officiis porro.\n \rQuae eum eaque error. Sed itaque ipsam nam provident aut voluptate. Perferendis repudiandae sequi laudantium est est animi eum. Unde alias et doloribus est hic et. Sed distinctio incidunt maiores aut voluptatibus et omnis mollitia fugit."
       }
     ]
+  }
+
+  class NOTES extends Component {
+    state = {
+      notes: [],
+      folders: [],
+      error: null,
+    };
+
+    setNotes = notes => {
+      this.setState({
+        notes,
+        error: null,
+      })
+    }
+
+    setFolders = folders => {
+      this.setState({
+        folders,
+        error: null
+      })
+    }
+
+    deleteNote = noteId => {
+      const newNotes = this.state.notes.filter(
+        note => note.id !== noteId
+      )
+      this.setState({
+        notes: newNotes
+      })
+    }
   }
