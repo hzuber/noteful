@@ -16,8 +16,7 @@ class App extends Component {
 
   deleteNote(noteId) {
     const newNotes = this.state.notes.filter(
-      note => note.id !== noteId
-    )
+      note => note.id !== noteId)
     this.setState({
       notes: newNotes
     })
@@ -61,15 +60,12 @@ class App extends Component {
                 <h1>
                   Noteful
                 </h1>
-                  </Link>
-                </header>
-                <div className="App-content"> 
+              </Link>
+            </header>
+            <div className="App-content">
               <Route exact path='/' component={NoteList} />
               <Route path='/folder/:folderId' component={NoteList} />
-              <Route
-                path='/note/:noteId'
-                component={Notepage}
-              />
+              <Route path='/note/:noteId' component = {Notepage}/>
             </div>
           </main>
         </NotefulContext.Provider>

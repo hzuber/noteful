@@ -16,6 +16,8 @@ class NotePage extends Component {
         const {notes=[]} = this.context;
         const note = notes.find(
             note => note.id === this.props.match.params.noteId);
+        
+        this.context.deleteNote(note.id);
         fetch(`http://localhost:9090/notes/${note.id}`, {
             method: 'DELETE',
             headers: {
@@ -31,9 +33,8 @@ class NotePage extends Component {
                 }
                 return res.json()
             })
-            .then(() => {
-                this.context.deleteNote(note.id);
-                this.props.history.goBack();
+            .then(()=> {
+                this.props.history.push('/');
             })
             .catch(error => {
                 console.error(error)
