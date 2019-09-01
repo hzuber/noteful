@@ -20,6 +20,9 @@
     background-color: #A2CC66;
     color: rgb(0, 15, 73);
 }
+.folder:hover{
+    background-color: rgb(211, 248, 160);
+}
 .NavLink{
     color: rgb(0, 15, 73);
 }

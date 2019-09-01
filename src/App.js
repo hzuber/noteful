@@ -5,7 +5,10 @@ import Notepage from './notePage/notePage';
 import Sidebar from './Sidebar/sidebar';
 import NoteList from './noteList/noteList';
 import NoteSideBar from './noteSidebar/noteSidebar';
+import AddFolder from './addFolder/AddFolder';
+import AddNote from './addNote/AddNote';
 import NotefulContext from './notefulContext';
+import NotefulError from './NotefulError';
 
 class App extends Component {
   state = {
@@ -21,6 +24,19 @@ class App extends Component {
       notes: newNotes
     })
   }
+
+  addFolder = folder => {
+    this.setState({
+      folders: [...this.state.folders, folder]
+    })
+  }
+
+  addNote = note => {
+    this.setState({
+      notes: [...this.state.notes, note]
+    })
+  }
+
 
   componentDidMount() {
     Promise.all([
@@ -45,15 +61,21 @@ class App extends Component {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
     }
     return (
       <div className="App">
         <NotefulContext.Provider value={contextValue}>
           <div className="App-sidebar">
-            <Route exact path='/' component={Sidebar} />
-            <Route path='/folder/:folderId' component={Sidebar} />
-            <Route path='/note/:noteId' component={NoteSideBar} />
+            <NotefulError>
+              <Route exact path='/' component={Sidebar} />
+              <Route path='/addFolder' component={Sidebar} />
+              <Route path='/addNote' component={Sidebar} />
+              <Route path='/folder/:folderId' component={Sidebar} />
+              <Route path='/note/:noteId' component={NoteSideBar} />
+            </NotefulError>
           </div>
           <main className="App-main">
             <header className="App-header">
@@ -64,9 +86,13 @@ class App extends Component {
               </Link>
             </header>
             <div className="App-content">
-              <Route exact path='/' component={NoteList} />
-              <Route path='/folder/:folderId' component={NoteList} />
-              <Route path='/note/:noteId' component = {Notepage}/>
+              <NotefulError>
+                <Route exact path='/' component={NoteList} />
+                <Route path='/addNote' component={AddNote} />
+                <Route path='/addFolder' component={AddFolder} />
+                <Route path='/folder/:folderId' component={NoteList} />
+                <Route path='/note/:noteId' component = {Notepage}/>
+              </NotefulError>
             </div>
           </main>
         </NotefulContext.Provider>

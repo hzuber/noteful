@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import './notePage.css';
 import NotefulContext from '../notefulContext.js';
+import PropTypes from 'prop-types';
 
 class NotePage extends Component {
     static defaultProps ={
@@ -57,7 +58,7 @@ class NotePage extends Component {
                     <div className="note-header-text">
                         <h3>{note.name}</h3>
                         <p>Modified on &nbsp;
-                                    <Moment format="LL">
+                            <Moment format="LL">
                                 {note.modified}
                             </Moment>
                         </p>
@@ -71,7 +72,42 @@ class NotePage extends Component {
                 <p className='note-content'>{note.content}</p>
             </article>
         )
+    
     }
 }
 
 export default NotePage;
+
+NotePage.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.shape({
+        name: (props, propName, componentName) => {
+            const prop = props[propName];
+        
+            if(!prop) {
+            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+            }
+        },
+        id: (props, propName, componentName) => {
+            const prop = props[propName];
+            const { notes } = this.context
+
+            if(!prop) {
+            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+            }
+
+            if(prop < 8 || prop > 30) {
+            return new Error(`Invalid prop, ${propName} should be in range 8-30 in ${componentName}. ${prop} found.`);
+            }
+
+            if(notes.find(note => note.id === prop)){
+                return new Error(`Invalid prop, ${propName} must be original. ${prop} is already a ${propName}.`)
+            }
+        },
+        folderId: (props, propName, componentName) => {
+            const prop = props[propName];
+            if(prop === 'None') {
+                return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+                }
+        }
+    }))
+}
