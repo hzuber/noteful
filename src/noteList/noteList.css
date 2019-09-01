@@ -9,7 +9,6 @@
     flex-wrap: wrap;
 }
 .note{
-    color: rgb(1, 15, 71);
     border: solid 1px grey;
     height: 150px;
     width: 150px;
@@ -20,6 +19,9 @@
 }
 .note:hover{
     background-color: rgb(245, 220, 77);
+}
+.note-Link{
+    color: rgb(1, 15, 71);
 }
 .add-note-btn{
     background-color: rgb(247, 233, 158);

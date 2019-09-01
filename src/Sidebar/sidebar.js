@@ -13,27 +13,29 @@ export default class SideBar extends Component {
             <div className="sidebar-container">
                 <ul className="folder-list">
                     {folders.map(folder =>
-                        <NavLink
+                        <li
+                            className="folder">
+                            <NavLink
                             key={folder.id}
                             to={`/folder/${folder.id}`}
                             style={{ textDecoration: 'none' }}
                             activeClassName="activeNavLink"
-                            className="NavLink">
-                            <li
-                                className="folder">
-                                {folder.name}
-                            </li>
-                        </NavLink>
+                            className="folder-NavLink">
+                            {folder.name}
+                            </NavLink>
+                        </li>
                     )
                     }
-                    <NavLink
-                        key='addFolderKey'
-                        to='/addFolder'
-                        style={{ textDecoration: 'none' }}
-                        activeClassName="activeNavLink"
-                        className="NavLink">
-                        <li className="folder">+ Add Folder</li>
-                    </NavLink>
+                    <li className="folder">
+                        <NavLink
+                            key='addFolderKey'
+                            to='/addFolder'
+                            style={{ textDecoration: 'none' }}
+                            activeClassName="activeNavLink"
+                            className="folder-NavLink">
+                            + Add Folder
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         )

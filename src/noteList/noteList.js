@@ -25,32 +25,37 @@ export default class NoteList extends Component {
             <>
                 <ul className="note-list">
                     {orderedNoteList.map((note) =>
-                        <Link
-                            key={note.id}
-                            to={`/note/${note.id}`}
-                            style={{ textDecoration: 'none' }}>
-                            <li className="note">
+                        <li className="note">
+                            <Link
+                                key={note.id}
+                                to={`/note/${note.id}`}
+                                style={{ textDecoration: 'none' }}
+                                className="note-Link">
                                 <h4>{note.name}</h4>
                                 <p>Modified on&nbsp;
                                 <Moment format="LL">
                                         {note.modified}
                                     </Moment>
                                 </p>
-                            </li>
-                        </ Link>   
+                            </ Link> 
+                        </li>  
                     )}
-                    <Link 
-                        to='/addNote'
-                        style={{ textDecoration: 'none' }}>
-                        <button className="add-note-btn note">
-                        Add note
-                        </button>
-                    </Link>
+                    <li>
+                        <Link 
+                            to='/addNote'
+                            style={{ textDecoration: 'none' }}
+                            className="note-Link">
+                            <button className="add-note-btn note">
+                            Add note
+                            </button>
+                        </Link>
+                    </li>
                 </ul>
             </>
         )
     }
 }
+
 
 NoteList.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.shape({

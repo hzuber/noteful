@@ -23,7 +23,7 @@
 .folder:hover{
     background-color: rgb(211, 248, 160);
 }
-.NavLink{
+.folder-NavLink{
     color: rgb(0, 15, 73);
 }
 .activeNavLink > .folder{
