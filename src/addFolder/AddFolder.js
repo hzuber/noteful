@@ -8,7 +8,7 @@ export default class AddFolder extends Component{
 
     state = {
         error: null,
-        id: RandomString(35).toString
+        id: RandomString(35)
     };
 
     handleSubmit = e => {
@@ -18,9 +18,8 @@ export default class AddFolder extends Component{
         const { id } = this.state
         const folder = {
             name: name.value,
-            id: this.state.id}
-            
-        console.log(folder)
+            id: id
+        }
 
         this.setState({ error:null })
         fetch(`http://localhost:9090/folders`, {
@@ -40,8 +39,6 @@ export default class AddFolder extends Component{
         })
         .then(data => {
             name.value=''
-            id.value=''
-            console.log(data)
             this.props.history.push('/')
             this.context.addFolder(data)
         })
