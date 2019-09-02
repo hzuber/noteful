@@ -14,9 +14,9 @@ export default class SideBar extends Component {
                 <ul className="folder-list">
                     {folders.map(folder =>
                         <li
+                            key={folder.id}
                             className="folder">
                             <NavLink
-                            key={folder.id}
                             to={`/folder/${folder.id}`}
                             style={{ textDecoration: 'none' }}
                             activeClassName="activeNavLink"
@@ -28,7 +28,6 @@ export default class SideBar extends Component {
                     }
                     <li className="folder">
                         <NavLink
-                            key='addFolderKey'
                             to='/addFolder'
                             style={{ textDecoration: 'none' }}
                             activeClassName="activeNavLink"

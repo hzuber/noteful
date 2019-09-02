@@ -7,27 +7,24 @@ export default class AddFolder extends Component{
     static contextType = NotefulContext;
     state = {
         error: null,
-        modified: new Date().toLocaleDateString,
-        id: new RandomString(35).toString,
+        modified: new Date(),
+        id: RandomString(35)
     };
 
     handleSubmit = e => {
         console.log('starting handleSubmit, state is ' + this.state)
         e.preventDefault();
         const { name, content, folderId } = e.target;
-        const { modified } = this.state;
-        const { id } = this.state;
-        console.log('in handle submit id is ' + id)
+        const { modified, id } = this.state;
         const note = {
             name: name.value,
-            id: this.state.id,
+            id: id,
             content: content.value,
-            modified: this.state.modified,
+            modified: modified,
             folderId: folderId.value
         }
         console.log('note is ' + note)
         
-
         this.setState({ error:null })
         fetch(`http://localhost:9090/notes`, {
             method: 'POST',
@@ -46,11 +43,8 @@ export default class AddFolder extends Component{
         })
         .then(data => {
             name.value=''
-            id.value=''
             content.value =''
-            modified.value = ''
             folderId.value=''
-            console.log(data)
             this.props.history.push('/')
             this.context.addNote(data)
         })
@@ -74,7 +68,7 @@ export default class AddFolder extends Component{
                     onSubmit={this.handleSubmit}
                 >
                     <div className='addNote-error' role='alert'>
-                        {error && <p>{error.message}</p>}
+                       {error && <p>{error.message}</p>}
                     </div>
                     <div>
                         <label htmlFor='name'>
@@ -88,13 +82,14 @@ export default class AddFolder extends Component{
                             id='name'
                             placeholder='My Note'
                             aria-required="true"
+                            required
                         />
                     </div>
                     <div>
                         <label htmlFor="folderId">
                             Choose which folder to place your note in:
                         </label>
-                        <select id='folderId' name='folderId'>
+                        <select id='folderId' name='folderId' required aria-required="true">
                             <option value="None">Select one...</option>
                             {chooseFolder}
                         </select>

@@ -25,9 +25,9 @@ export default class NoteList extends Component {
             <>
                 <ul className="note-list">
                     {orderedNoteList.map((note) =>
-                        <li className="note">
+                        <li className="note"
+                        key={note.id}>
                             <Link
-                                key={note.id}
                                 to={`/note/${note.id}`}
                                 style={{ textDecoration: 'none' }}
                                 className="note-Link">
