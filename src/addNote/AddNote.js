@@ -12,11 +12,12 @@ export default class AddFolder extends Component{
     };
 
     handleSubmit = e => {
-        console.log('starting handleSubmit')
+        console.log('starting handleSubmit, state is ' + this.state)
         e.preventDefault();
         const { name, content, folderId } = e.target;
         const { modified } = this.state;
         const { id } = this.state;
+        console.log('in handle submit id is ' + id)
         const note = {
             name: name.value,
             id: this.state.id,
@@ -24,6 +25,7 @@ export default class AddFolder extends Component{
             modified: this.state.modified,
             folderId: folderId.value
         }
+        console.log('note is ' + note)
         
 
         this.setState({ error:null })
@@ -112,7 +114,7 @@ export default class AddFolder extends Component{
                         <button type='submit' className='addNote-submit-btn'>
                             Add Note
                         </button>
-                        <button className='addNote-cancel-btn'>
+                        <button className='addNote-cancel-btn' onClick={() => this.props.history.goBack()}>
                             Cancel
                         </button>
                     </div>

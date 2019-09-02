@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddFolder.css';
-import RandomString from '../randomNumber'
+import RandomString from '../randomNumber';
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
@@ -83,7 +83,7 @@ export default class AddFolder extends Component{
                         <button type='submit' className='addFolder-submit-btn'>
                             Add Folder
                         </button>
-                        <button className='addFolder-cancel-btn'>
+                        <button type="button" className='addFolder-cancel-btn' onClick={() => this.props.history.goBack()}>
                             Cancel
                         </button>
                     </div>

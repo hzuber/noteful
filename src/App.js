@@ -37,6 +37,10 @@ class App extends Component {
     })
   }
 
+  cancelButton() {
+    this.history.goBack();
+  }
+
 
   componentDidMount() {
     Promise.all([
@@ -63,7 +67,8 @@ class App extends Component {
       folders: this.state.folders,
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
-      addNote: this.addNote
+      addNote: this.addNote,
+      cancelButton: this.cancelButton
     }
     return (
       <div className="App">
