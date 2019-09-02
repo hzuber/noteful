@@ -1,29 +1,29 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddNote.css';
+import RandomString from '../randomNumber';
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
-
     state = {
         error: null,
-        modified: new Date().toLocaleDateString
+        modified: new Date().toLocaleDateString,
+        id: new RandomString(35).toString,
     };
 
     handleSubmit = e => {
         console.log('starting handleSubmit')
         e.preventDefault();
-        const { name, id, content, folderId } = e.target;
+        const { name, content, folderId } = e.target;
         const { modified } = this.state;
+        const { id } = this.state;
         const note = {
             name: name.value,
-            id: id.value,
+            id: this.state.id,
             content: content.value,
             modified: this.state.modified,
             folderId: folderId.value
         }
-            
-        console.log(note)
         
 
         this.setState({ error:null })
@@ -85,23 +85,8 @@ export default class AddFolder extends Component{
                             name='name'
                             id='name'
                             placeholder='My Note'
-                            required
+                            aria-required="true"
                         />
-                    </div>
-                    <div>
-                        <label htmlFor='id'>
-                            Note Id
-                            {' '}
-                            <Required />
-                        </label>
-                        <input
-                            type="text"
-                            name='id'
-                            id='id'
-                            placeholder='type-a-fully-original-id-here'
-                            required
-                        />
-                        <p className='addNote-hint'>Must be between 8-30 characters and not match any other folder Ids.</p>
                     </div>
                     <div>
                         <label htmlFor="folderId">

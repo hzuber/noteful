@@ -1,0 +1,44 @@
+.AddFolder{
+    background-color: rgb(247, 233, 158);
+    padding: 20px 0px;
+}
+label{
+    padding: 5px;
+    margin: 5px;
+}
+input[type='text']{
+    margin: 5px;
+    padding: 5px;
+}
+.addFolder-cancel-btn{
+    min-width: 90px;
+    width: 20%;
+    align-self: flex-start;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bolder;
+    background-color: rgb(31, 33, 131);
+    color: white;
+    outline: none;
+    border: none;
+    margin: 5px 10px;
+    min-width: 92px;
+}
+.addFolder-submit-btn{
+    min-width: 90px;
+    width: 20%;
+    align-self: flex-start;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bolder;
+    background-color: rgb(31, 33, 131);
+    color: white;
+    outline: none;
+    border: none;
+    margin: 5px 10px;
+    min-width: 92px;
+}
+.addFolder-cancel-btn:hover, .addFolder-submit-btn:hover{
+    cursor: pointer;
+    background-color: rgb(71, 73, 189);
+}

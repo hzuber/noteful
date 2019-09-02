@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddFolder.css';
+import RandomString from '../randomNumber'
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
 
     state = {
         error: null,
+        id: RandomString(35).toString
     };
 
     handleSubmit = e => {
         console.log('starting handleSubmit')
         e.preventDefault();
-        const { name, id } = e.target;
+        const { name } = e.target;
+        const { id } = this.state
         const folder = {
             name: name.value,
-            id: id.value}
+            id: this.state.id}
             
         console.log(folder)
 
@@ -75,21 +78,6 @@ export default class AddFolder extends Component{
                             placeholder='My Folder'
                             required
                         />
-                    </div>
-                    <div>
-                        <label htmlFor='id'>
-                            Folder Id
-                            {' '}
-                            <Required />
-                        </label>
-                        <input
-                            type="text"
-                            name='id'
-                            id='id'
-                            placeholder='type-a-fully-original-id-here'
-                            required
-                        />
-                        <p className='addFolder-hint'>Must be between 8-30 characters and not match any other folder Ids.</p>
                     </div>
                     <div className='addFolder-buttons'>
                         <button type='submit' className='addFolder-submit-btn'>
