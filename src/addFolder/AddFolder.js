@@ -6,19 +6,14 @@ import RandomString from '../randomNumber';
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
 
-    state = {
-        error: null,
-        id: RandomString(35)
-    };
-
     handleSubmit = e => {
-        console.log('starting handleSubmit')
+        const { setError } = this.context;
         e.preventDefault();
         const { name } = e.target;
-        const { id } = this.state
+        const id = RandomString(35)
         const folder = {
             name: name.value,
-            id: id
+            id
         }
 
         this.setState({ error:null })
@@ -43,7 +38,7 @@ export default class AddFolder extends Component{
             this.context.addFolder(data)
         })
         .catch(error => {
-            this.setState({error})
+            setError({error})
         })
     }
 
@@ -51,7 +46,7 @@ export default class AddFolder extends Component{
         const Required = () => (
             <span className='addFolder-required'>*</span>
           )
-        const {error} = this.state
+        const {error} = this.context;
         return (
             <section className = "AddFolder">
                 <h2>Add a Folder</h2>

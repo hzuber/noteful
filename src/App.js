@@ -37,10 +37,15 @@ class App extends Component {
     })
   }
 
-  cancelButton() {
+  cancelButton= () => {
     this.history.goBack();
   }
 
+  setError = (error) => {
+    this.setState({
+      error
+    })
+  }
 
   componentDidMount() {
     Promise.all([
@@ -68,7 +73,9 @@ class App extends Component {
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
       addNote: this.addNote,
-      cancelButton: this.cancelButton
+      cancelButton: this.cancelButton,
+      setError: this.setError,
+      error: this.state.error
     }
     return (
       <div className="App">
@@ -93,9 +100,10 @@ class App extends Component {
             <div className="App-content">
               <NotefulError>
                 <Route exact path='/' component={NoteList} />
+                <Route path='/folder/:folderId/addNote' component={AddNote} />
                 <Route path='/addNote' component={AddNote} />
                 <Route path='/addFolder' component={AddFolder} />
-                <Route path='/folder/:folderId' component={NoteList} />
+                <Route exact path='/folder/:folderId' component={NoteList} />
                 <Route path='/note/:noteId' component = {Notepage}/>
               </NotefulError>
             </div>

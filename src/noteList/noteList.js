@@ -19,14 +19,39 @@ export default class NoteList extends Component {
                 note.folderId === this.props.match.params.folderId) :
             notes;
         const orderedNoteList = noteList.sort((note1, note2) =>
-        note1.modified < note2.modified ? 1 : -1
-    )
+            note1.modified < note2.modified ? 1 : -1)
+        const addNote = this.props.match.params.folderId ? 
+            (
+            <li>
+                <Link 
+                    to={`/folder/${this.props.match.params.folderId}/addNote`}
+                    style={{ textDecoration: 'none' }}
+                    className="note-Link">
+                    <button className="add-note-btn note">
+                    Add note
+                    </button>
+                </Link>
+            </li>
+            ) 
+            : (
+            <li>
+                <Link 
+                    to='/addNote'
+                    style={{ textDecoration: 'none' }}
+                    className="note-Link">
+                    <button className="add-note-btn note">
+                    Add note
+                    </button>
+                </Link>
+            </li>
+            );
+            console.log('addNote is' + addNote)
         return (
             <>
                 <ul className="note-list">
                     {orderedNoteList.map((note) =>
                         <li className="note"
-                        key={note.id}>
+                            key={note.id}>
                             <Link
                                 to={`/note/${note.id}`}
                                 style={{ textDecoration: 'none' }}
@@ -38,18 +63,9 @@ export default class NoteList extends Component {
                                     </Moment>
                                 </p>
                             </ Link> 
-                        </li>  
+                        </li>
                     )}
-                    <li>
-                        <Link 
-                            to='/addNote'
-                            style={{ textDecoration: 'none' }}
-                            className="note-Link">
-                            <button className="add-note-btn note">
-                            Add note
-                            </button>
-                        </Link>
-                    </li>
+                    {addNote}
                 </ul>
             </>
         )

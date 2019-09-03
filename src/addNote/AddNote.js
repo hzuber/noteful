@@ -5,27 +5,22 @@ import RandomString from '../randomNumber';
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
-    state = {
-        error: null,
-        modified: new Date(),
-        id: RandomString(35)
-    };
 
     handleSubmit = e => {
-        console.log('starting handleSubmit, state is ' + this.state)
+        const {setError} = this.context
         e.preventDefault();
         const { name, content, folderId } = e.target;
-        const { modified, id } = this.state;
+        const modified = new Date().toISOString();
+        const id = RandomString(35)
         const note = {
             name: name.value,
-            id: id,
+            id,
             content: content.value,
-            modified: modified,
+            modified,
             folderId: folderId.value
         }
         console.log('note is ' + note)
         
-        this.setState({ error:null })
         fetch(`http://localhost:9090/notes`, {
             method: 'POST',
             body: JSON.stringify(note),
@@ -49,17 +44,25 @@ export default class AddFolder extends Component{
             this.context.addNote(data)
         })
         .catch(error => {
-            this.setState({error})
+            setError({error})
         })
     }
 
     render() {
-        const {folders=[]} = this.context;
-        const chooseFolder = folders.map(folder => <option value={folder.id}>{folder.name}</option>);
+        const {folders=[], error} = this.context;
+        const folder = 
+            this.props.match.params.folderId ? 
+            folders.find(folder =>  folder.id ===this.props.match.params.folderId) : 
+            null;
+        const whichFolder = folder ?
+            <option value={folder.id}>{folder.name}</option> : 
+            <option value="None">Select one...</option>;
+        console.log('whichFolder is ' + whichFolder)
+        const chooseFolder = folders.map(folder => <option value={folder.id} key={folder.id}>{folder.name}</option>);
         const Required = () => (
             <span className='addNote-required'>*</span>
-          )
-        const {error} = this.state
+          );
+
         return (
             <section className = "AddNote">
                 <h2>Add a Note</h2>
@@ -90,7 +93,7 @@ export default class AddFolder extends Component{
                             Choose which folder to place your note in:
                         </label>
                         <select id='folderId' name='folderId' required aria-required="true">
-                            <option value="None">Select one...</option>
+                            {whichFolder}
                             {chooseFolder}
                         </select>
                     </div>
