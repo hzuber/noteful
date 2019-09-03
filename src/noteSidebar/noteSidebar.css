@@ -1,16 +1,29 @@
 .selected-folder{
-    text-align: left;
-    padding: 10px 25px 10px 15px;
-    margin: 15px;
-    text-decoration: none !important;
+    color: rgb(0, 15, 73);
     border-top: 1px solid grey;
     border-bottom: 1px solid grey;
     border-left: 1px solid grey;
     border-radius: 5px 0px 0px 5px;
-    margin-right: 0px;
-    margin-left: 30%;
+    min-width: 125px;
+    max-width:220px;
+    width: 100%;
+    margin: 1px 0px 16px auto;
+    overflow: hidden;
+    display: flex;
+}
+.selected-folder-NavLink{
+    padding: 10px 3px 10px 15px;
+    margin: 0px;
+    text-align: left;
+    width: 100%;
+    min-width: 125px;
+    max-width:220px;
+    text-decoration: none !important;
     font-size: 20px;
     font-weight: bolder;
-    font-style: italic;
-    background-color: #67991F;
+    background-color: #A2CC66;
+    color: rgb(0, 15, 73);
+}
+.selected-folder-NavLink:hover{
+    background-color: rgb(211, 248, 160);
 }

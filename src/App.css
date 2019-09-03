@@ -2,6 +2,7 @@
   text-align: center;
   display: flex;
   align-items: stretch;
+  align-content: space-around;
 }
 
 .App-header {
@@ -25,6 +26,7 @@
   border: 1px solid grey;
   width: 75%;
   margin: 20px 20px 20px 0px;
+  z-index: 1;
 }
 
 .App-content{
