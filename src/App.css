@@ -2,7 +2,7 @@
   text-align: center;
   display: flex;
   align-items: stretch;
-  align-content: space-around;
+  align-content: center;
 }
 
 .App-header {
@@ -27,6 +27,7 @@
   width: 75%;
   margin: 20px 20px 20px 0px;
   z-index: 1;
+  max-width: 750px;
 }
 
 .App-content{
