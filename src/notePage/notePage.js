@@ -1,41 +1,76 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import './notePage.css';
 import NotefulContext from '../notefulContext.js';
-import PropTypes from 'prop-types';
 
 class NotePage extends Component {
+    static contextType = NotefulContext
     static defaultProps ={
         deleteNote: () => {},
         match: {
             params:{}
         }
     }
-    static contextType = NotefulContext
+    constructor(props){
+        super(props)
+        this.state = {
+            id: '',
+            name: '',
+            date_modified: '',
+            content: '',
+            folder_id: ''
+        }
+    }
+
+    componentDidMount(){
+        const noteId = this.props.match.params.note_id;
+        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+            method: 'GET',
+            header: {
+                'content-type': 'application/json'
+            }
+        })
+        .then(res => {
+            if(!res.ok){
+                return res.json().then(error => {
+                    throw error
+                })
+            }
+            return res.json()
+        })
+        .then(res => {
+            this.setState({
+                id: noteId,
+                name: res.name,
+                content: res.content,
+                date_modified: res.date_modified,
+                folder_id: res.folder_id
+            })
+        })
+    }
 
     deleteNoteRequest() {
-        const {notes=[]} = this.context;
-        const note = notes.find(
-            note => note.id === this.props.match.params.noteId);
-        console.log('note.name from top of fetch: ' + note.name)
+        const noteId = Number(this.props.match.params.note_id);
 
-        fetch(`http://localhost:9090/notes/${note.id}`, {
+        fetch(`http://localhost:8000/api/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
             }
         })
             .then(res => {
-                if (!res.ok) 
-                    return res.json()
-                        .then(e => Promise.reject(e))
-                return res.json()
+                console.log(res)
+                if (!res.ok) {
+                    return res.then(error => {
+                        throw error
+                    })
+                }
+                return res
             })
-            .then(()=> {
+            .then((data)=> {
                 this.props.history.push('/');
-            })
-            .then(() => {
-                this.context.deleteNote(note.id);
+                this.context.deleteNote(noteId);
             })
             .catch(error => {
                 console.error(error)
@@ -43,10 +78,7 @@ class NotePage extends Component {
     }
     
     render() {
-        const {notes=[]} = this.context;
-        console.log('render the notePage');
-        const note = notes.find(
-            note => note.id === this.props.match.params.noteId);
+        const { id, name, content, date_modified } = this.state;
         return (
             <article className="Note">
                 <header className="note-header">
@@ -56,10 +88,10 @@ class NotePage extends Component {
                         Go Back
                     </button>
                     <div className="note-header-text">
-                        <h3>{note.name}</h3>
+                        <h3>{name}</h3>
                         <p>Modified on &nbsp;
                             <Moment format="LL">
-                                {note.modified}
+                                {date_modified}
                             </Moment>
                         </p>
                     </div>
@@ -68,8 +100,14 @@ class NotePage extends Component {
                         onClick={() => this.deleteNoteRequest()}>
                         Delete
                     </button>
+                    <Link to = {`/note/${id}/edit`}>
+                        <button
+                            className='edit-btn'>
+                                Edit
+                        </button>  
+                    </Link>  
                 </header>
-                <p className='note-content'>{note.content}</p>
+                <p className='note-content'>{content}</p>
             </article>
         )
     
@@ -77,37 +115,3 @@ class NotePage extends Component {
 }
 
 export default NotePage;
-
-NotePage.propTypes = {
-    notes: PropTypes.arrayOf(PropTypes.shape({
-        name: (props, propName, componentName) => {
-            const prop = props[propName];
-        
-            if(!prop) {
-            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-            }
-        },
-        id: (props, propName, componentName) => {
-            const prop = props[propName];
-            const { notes } = this.context
-
-            if(!prop) {
-            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-            }
-
-            if(prop < 8 || prop > 30) {
-            return new Error(`Invalid prop, ${propName} should be in range 8-30 in ${componentName}. ${prop} found.`);
-            }
-
-            if(notes.find(note => note.id === prop)){
-                return new Error(`Invalid prop, ${propName} must be original. ${prop} is already a ${propName}.`)
-            }
-        },
-        folderId: (props, propName, componentName) => {
-            const prop = props[propName];
-            if(prop === 'None') {
-                return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-                }
-        }
-    }))
-}

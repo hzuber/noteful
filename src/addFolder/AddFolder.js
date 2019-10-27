@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddFolder.css';
-import RandomString from '../randomNumber';
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
@@ -10,14 +9,12 @@ export default class AddFolder extends Component{
         const { setError } = this.context;
         e.preventDefault();
         const { name } = e.target;
-        const id = RandomString(35)
         const folder = {
-            name: name.value,
-            id
+            name: name.value
         }
 
         this.setState({ error:null })
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`http://localhost:8000/api/folders`, {
             method: 'POST',
             body: JSON.stringify(folder),
             headers: {

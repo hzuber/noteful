@@ -14,17 +14,17 @@ export default class NoteList extends Component {
     static contextType = NotefulContext;
     render() {
         const { notes } = this.context;
-        const noteList = this.props.match.params.folderId ?
+        const noteList = this.props.match.params.folder_id ?
             notes.filter(note =>
-                note.folderId === this.props.match.params.folderId) :
+                note.folder_id === Number(this.props.match.params.folder_id)) :
             notes;
         const orderedNoteList = noteList.sort((note1, note2) =>
-            note1.modified < note2.modified ? 1 : -1)
-        const addNote = this.props.match.params.folderId ? 
+            note1.date_modified < note2.date_modified ? 1 : -1)
+        const addNote = this.props.match.params.folder_id ? 
             (
             <li>
                 <Link 
-                    to={`/folder/${this.props.match.params.folderId}/addNote`}
+                    to={`/folder/${this.props.match.params.folder_id}/addNote`}
                     style={{ textDecoration: 'none' }}
                     className="note-Link">
                     <button className="add-note-btn note">
@@ -45,7 +45,6 @@ export default class NoteList extends Component {
                 </Link>
             </li>
             );
-            console.log('addNote is' + addNote)
         return (
             <>
                 <ul className="note-list">
@@ -59,8 +58,8 @@ export default class NoteList extends Component {
                                 <h4>{note.name}</h4>
                                 <p>Modified on&nbsp;
                                 <Moment format="LL">
-                                        {note.modified}
-                                    </Moment>
+                                    {note.date_modified}
+                                </Moment>
                                 </p>
                             </ Link> 
                         </li>
@@ -75,34 +74,7 @@ export default class NoteList extends Component {
 
 NoteList.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.shape({
-        name: (props, propName, componentName) => {
-            const prop = props[propName];
-        
-            if(!prop) {
-            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-            }
-        },
-        id: (props, propName, componentName) => {
-            const prop = props[propName];
-            const { notes } = this.context
-
-            if(!prop) {
-            return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-            }
-
-            if(prop < 8 || prop > 30) {
-            return new Error(`Invalid prop, ${propName} should be in range 8-30 in ${componentName}. ${prop} found.`);
-            }
-
-            if(notes.find(note => note.id === prop)){
-                return new Error(`Invalid prop, ${propName} must be original. ${prop} is already a ${propName}.`)
-            }
-        },
-        folderId: (props, propName, componentName) => {
-            const prop = props[propName];
-            if(prop === 'None') {
-                return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-                }
-        }
+        name: PropTypes.string.isRequired,
+        date_modified: PropTypes.string.isRequired,
     }))
 }

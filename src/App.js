@@ -9,6 +9,7 @@ import AddFolder from './addFolder/AddFolder';
 import AddNote from './addNote/AddNote';
 import NotefulContext from './notefulContext';
 import NotefulError from './NotefulError';
+import EditNote from './editNote/editNote'
 
 class App extends Component {
   state = {
@@ -23,6 +24,15 @@ class App extends Component {
     this.setState({
       notes: newNotes
     })
+  }
+
+  editNote = (editedNote) => {
+    const newNotes = this.state.notes.map(note =>
+      (note.id !== editedNote.id) ? note : editedNote
+      )
+      this.setState({
+        notes: newNotes
+      })
   }
 
   addFolder = folder => {
@@ -49,8 +59,8 @@ class App extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:9090/notes'),
-      fetch('http://localhost:9090/folders')
+      fetch('http://localhost:8000/api/notes'),
+      fetch('http://localhost:8000/api/folders')
     ])
       .then(([foldersRes, notesRes]) => {
         if (!foldersRes.ok)
@@ -71,6 +81,7 @@ class App extends Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
+      editNote: this.editNote,
       addFolder: this.addFolder,
       addNote: this.addNote,
       cancelButton: this.cancelButton,
@@ -85,8 +96,8 @@ class App extends Component {
               <Route exact path='/' component={Sidebar} />
               <Route path='/addFolder' component={Sidebar} />
               <Route path='/addNote' component={Sidebar} />
-              <Route path='/folder/:folderId' component={Sidebar} />
-              <Route path='/note/:noteId' component={NoteSideBar} />
+              <Route path='/folder/:folder_id' component={Sidebar} />
+              <Route path='/note/:note_id' component={NoteSideBar}/> 
             </NotefulError>
           </div>
           <main className="App-main">
@@ -100,11 +111,12 @@ class App extends Component {
             <div className="App-content">
               <NotefulError>
                 <Route exact path='/' component={NoteList} />
-                <Route path='/folder/:folderId/addNote' component={AddNote} />
+                <Route path='/folder/:folder_id/addNote' component={AddNote} />
                 <Route path='/addNote' component={AddNote} />
                 <Route path='/addFolder' component={AddFolder} />
-                <Route exact path='/folder/:folderId' component={NoteList} />
-                <Route path='/note/:noteId' component = {Notepage}/>
+                <Route exact path='/folder/:folder_id' component={NoteList} />
+                <Route exact path='/note/:note_id' component = {Notepage}/>
+                <Route path= '/note/:note_id/edit' component = {EditNote}/>
               </NotefulError>
             </div>
           </main>

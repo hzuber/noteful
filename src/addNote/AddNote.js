@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddNote.css';
-import RandomString from '../randomNumber';
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
@@ -9,19 +8,17 @@ export default class AddFolder extends Component{
     handleSubmit = e => {
         const {setError} = this.context
         e.preventDefault();
-        const { name, content, folderId } = e.target;
+        const { name, content, folder_id } = e.target;
         const modified = new Date().toISOString();
-        const id = RandomString(35)
         const note = {
             name: name.value,
-            id,
             content: content.value,
-            modified,
-            folderId: folderId.value
+            date_modified: modified,
+            folder_id: folder_id.value
         }
         console.log('note is ' + note)
         
-        fetch(`http://localhost:9090/notes`, {
+        fetch(`http://localhost:8000/api/notes`, {
             method: 'POST',
             body: JSON.stringify(note),
             headers: {
@@ -39,7 +36,7 @@ export default class AddFolder extends Component{
         .then(data => {
             name.value=''
             content.value =''
-            folderId.value=''
+            folder_id.value=''
             this.props.history.push('/')
             this.context.addNote(data)
         })
@@ -51,8 +48,8 @@ export default class AddFolder extends Component{
     render() {
         const {folders=[], error} = this.context;
         const folder = 
-            this.props.match.params.folderId ? 
-            folders.find(folder =>  folder.id ===this.props.match.params.folderId) : 
+            this.props.match.params.folder_id ? 
+            folders.find(folder =>  folder.id === Number(this.props.match.params.folder_id)) : 
             null;
         const whichFolder = folder ?
             <option value={folder.id}>{folder.name}</option> : 
@@ -89,10 +86,10 @@ export default class AddFolder extends Component{
                         />
                     </div>
                     <div>
-                        <label htmlFor="folderId">
+                        <label htmlFor="folder_id">
                             Choose which folder to place your note in:
                         </label>
-                        <select id='folderId' name='folderId' required aria-required="true">
+                        <select id='folder_id' name='folder_id' required aria-required="true">
                             {whichFolder}
                             {chooseFolder}
                         </select>
