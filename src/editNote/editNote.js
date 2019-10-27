@@ -24,11 +24,11 @@ class EditNote extends Component {
 
     componentDidMount(){
         console.log('component mounted')
-        const noteId = Number(this.props.match.params.note_id)
+        const noteId = this.props.match.params.note_id;
         fetch(`http://localhost:8000/api/notes/${noteId}`, {
             method: 'GET'
         })
-        .then(res => (res.ok ? res: Promise.reject(res))
+        .then(res => (res.ok ? res: Promise.reject(res)))
             
         .then(res => res.json())
         .then(res => {
@@ -75,30 +75,26 @@ class EditNote extends Component {
                 content: '',
                 folder_id: 1
             })
-            this.context.editNote(newNote)
         })
         .then(()=> {
             this.props.history.push('/')
         })
+        .then(() =>
+            this.context.editNote(newNote)
+        )
         .catch(error => {
             this.setState({ error })
         })
     }
 
-    handleNameChange = (name) => {
-        this.setState({name})
-    }
+    handleInputChange = (event) => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
 
-    handleContentChange = (content) => {
-        this.setState({content})
-    }
-
-    handleFolderChange = (folder_id) => {
-        this.setState({folder_id})
-    }
-
-    clickCancel = () => {
-        this.props.history.push('/')
+        this.setState({
+            [name]: value
+        })
     }
 
     render() {
@@ -122,7 +118,7 @@ class EditNote extends Component {
                                 name="name"
                                 id="name"
                                 value={name}
-                                onChange={e => this.handleNameChange(e.target.value)}/>
+                                onChange={e => this.handleInputChange(e)}/>
                         <label htmlFor="content">
                             Content:
                         </label>
@@ -131,7 +127,7 @@ class EditNote extends Component {
                                 name="content"
                                 id="content"
                                 value={content}
-                                onChange={e => this.handleContentChange(e.target.value)}/>
+                                onChange={e => this.handleInputChange(e)}/>
                         <label htmlFor="folder-id">
                             Folder: 
                         </label>
@@ -139,7 +135,7 @@ class EditNote extends Component {
                             id="folder_id" 
                             name="folder_id"
                             value={folder_id}
-                            onChange={e => this.handleFolderChange(e.target.value)}>
+                            onChange={e => this.handleInputChange(e)}>
                             {chooseFolder}
                         </select>
                         <div className = "editForm_buttons">

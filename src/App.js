@@ -97,7 +97,7 @@ class App extends Component {
               <Route path='/addFolder' component={Sidebar} />
               <Route path='/addNote' component={Sidebar} />
               <Route path='/folder/:folder_id' component={Sidebar} />
-              <Route path='/note/:note_id' component={NoteSideBar}/> 
+              <Route path='/note/:note_id' component={Sidebar}/> 
             </NotefulError>
           </div>
           <main className="App-main">

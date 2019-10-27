@@ -13,9 +13,11 @@ export default class NoteSideBar extends Component {
     }
     static contextType = NotefulContext
 
+
     render() {
         const { notes } = this.context;
         const { folders } = this.context;
+        console.log(notes, folders)
         const note = notes.find(note =>
             note.id === Number(this.props.match.params.note_id));
             console.log(note)

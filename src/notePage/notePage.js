@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import './notePage.css';
 import NotefulContext from '../notefulContext.js';
 
 class NotePage extends Component {
     static contextType = NotefulContext
-    static defaultProps ={
-        deleteNote: () => {},
+    static defaultProps = {
+        deleteNote: () => { },
         match: {
-            params:{}
+            params: {}
         }
     }
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             id: '',
@@ -23,7 +23,7 @@ class NotePage extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const noteId = this.props.match.params.note_id;
         fetch(`http://localhost:8000/api/notes/${noteId}`, {
             method: 'GET',
@@ -31,23 +31,23 @@ class NotePage extends Component {
                 'content-type': 'application/json'
             }
         })
-        .then(res => {
-            if(!res.ok){
-                return res.json().then(error => {
-                    throw error
-                })
-            }
-            return res.json()
-        })
-        .then(res => {
-            this.setState({
-                id: noteId,
-                name: res.name,
-                content: res.content,
-                date_modified: res.date_modified,
-                folder_id: res.folder_id
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(error => {
+                        throw error
+                    })
+                }
+                return res.json()
             })
-        })
+            .then(res => {
+                this.setState({
+                    id: noteId,
+                    name: res.name,
+                    content: res.content,
+                    date_modified: res.date_modified,
+                    folder_id: res.folder_id
+                })
+            })
     }
 
     deleteNoteRequest() {
@@ -68,7 +68,7 @@ class NotePage extends Component {
                 }
                 return res
             })
-            .then((data)=> {
+            .then((data) => {
                 this.props.history.push('/');
                 this.context.deleteNote(noteId);
             })
@@ -76,17 +76,12 @@ class NotePage extends Component {
                 console.error(error)
             })
     }
-    
+
     render() {
         const { id, name, content, date_modified } = this.state;
         return (
-            <article className="Note">
+            <div className="note-container">
                 <header className="note-header">
-                    <button
-                        className="go-back-btn"
-                        onClick={() => this.props.history.goBack()}>
-                        Go Back
-                    </button>
                     <div className="note-header-text">
                         <h3>{name}</h3>
                         <p>Modified on &nbsp;
@@ -95,22 +90,29 @@ class NotePage extends Component {
                             </Moment>
                         </p>
                     </div>
-                    <button
-                        className='delete-btn'
-                        onClick={() => this.deleteNoteRequest()}>
-                        Delete
-                    </button>
-                    <Link to = {`/note/${id}/edit`}>
+                    <p className='note-content'>{content}</p>
+                    <div className="button-container">
                         <button
-                            className='edit-btn'>
+                            className="go-back-btn"
+                            onClick={() => this.props.history.goBack()}>
+                            Go Back
+                        </button>
+                        <button
+                            className='delete-btn'
+                            onClick={() => this.deleteNoteRequest()}>
+                            Delete
+                        </button>
+                        <Link to={`/note/${id}/edit`}>
+                            <button
+                                className='edit-btn'>
                                 Edit
-                        </button>  
-                    </Link>  
+                        </button>
+                        </Link>
+                    </div>
                 </header>
-                <p className='note-content'>{content}</p>
-            </article>
+            </div>
         )
-    
+
     }
 }
 
