@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import './notePage.css';
 import NotefulContext from '../notefulContext.js';
+import config from '../config'
 
 class NotePage extends Component {
     static contextType = NotefulContext
@@ -25,7 +26,7 @@ class NotePage extends Component {
 
     componentDidMount() {
         const noteId = this.props.match.params.note_id;
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
             method: 'GET',
             header: {
                 'content-type': 'application/json'
@@ -53,7 +54,7 @@ class NotePage extends Component {
     deleteNoteRequest() {
         const noteId = Number(this.props.match.params.note_id);
 
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
@@ -90,26 +91,26 @@ class NotePage extends Component {
                             </Moment>
                         </p>
                     </div>
-                    <p className='note-content'>{content}</p>
-                    <div className="button-container">
-                        <button
-                            className="go-back-btn"
-                            onClick={() => this.props.history.goBack()}>
-                            Go Back
-                        </button>
-                        <button
-                            className='delete-btn'
-                            onClick={() => this.deleteNoteRequest()}>
-                            Delete
-                        </button>
-                        <Link to={`/note/${id}/edit`}>
-                            <button
-                                className='edit-btn'>
-                                Edit
-                        </button>
-                        </Link>
-                    </div>
                 </header>
+                <p className='note-content'>{content}</p>
+                <div className="button-container">
+                    <button
+                        className="go-back-btn"
+                        onClick={() => this.props.history.goBack()}>
+                        Go Back
+                        </button>
+                    <button
+                        className='delete-btn'
+                        onClick={() => this.deleteNoteRequest()}>
+                        Delete
+                        </button>
+                    <Link to={`/note/${id}/edit`}>
+                        <button
+                            className='edit-btn'>
+                            Edit
+                        </button>
+                    </Link>
+                </div>
             </div>
         )
 

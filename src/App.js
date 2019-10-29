@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import './App.css';
+import config from './config'
 import Notepage from './notePage/notePage';
 import Sidebar from './Sidebar/sidebar';
 import NoteList from './noteList/noteList';
-import NoteSideBar from './noteSidebar/noteSidebar';
 import AddFolder from './addFolder/AddFolder';
 import AddNote from './addNote/AddNote';
 import NotefulContext from './notefulContext';
@@ -59,8 +59,8 @@ class App extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:8000/api/notes'),
-      fetch('http://localhost:8000/api/folders')
+      fetch(`${config.API_ENDPOINT}/api/notes`),
+      fetch(`${config.API_ENDPOINT}/api/folders`)
     ])
       .then(([foldersRes, notesRes]) => {
         if (!foldersRes.ok)

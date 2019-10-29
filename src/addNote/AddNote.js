@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NotefulContext from '../notefulContext';
 import './AddNote.css';
+import config from '../config'
 
 export default class AddFolder extends Component{
     static contextType = NotefulContext;
@@ -18,7 +19,7 @@ export default class AddFolder extends Component{
         }
         console.log('note is ' + note)
         
-        fetch(`http://localhost:8000/api/notes`, {
+        fetch(`${config.API_ENDPOINT}/api/notes`, {
             method: 'POST',
             body: JSON.stringify(note),
             headers: {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './editNote.css';
-import NotefulContext from '../notefulContext'
+import NotefulContext from '../notefulContext';
+import config from '../config'
 
 class EditNote extends Component {
     static contextType = NotefulContext
@@ -25,7 +26,7 @@ class EditNote extends Component {
     componentDidMount(){
         console.log('component mounted')
         const noteId = this.props.match.params.note_id;
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
             method: 'GET'
         })
         .then(res => (res.ok ? res: Promise.reject(res)))
@@ -52,7 +53,7 @@ class EditNote extends Component {
         const newDate = new Date().toISOString();
         const newNote = { id, name, content, folder_id, date_modified: newDate }
         console.log(newNote)
-        fetch(`http://localhost:8000/api/notes/${id}`, {
+        fetch(`${config.API_ENDPOINT}/api/notes/${id}`, {
             method: 'PATCH',
             body: JSON.stringify(newNote),
             headers: {
@@ -95,6 +96,10 @@ class EditNote extends Component {
         this.setState({
             [name]: value
         })
+    }
+
+    clickCancel = () => {
+        this.props.history.goBack()
     }
 
     render() {
