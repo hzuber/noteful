@@ -61,7 +61,6 @@ class NotePage extends Component {
             }
         })
             .then(res => {
-                console.log(res)
                 if (!res.ok) {
                     return res.then(error => {
                         throw error

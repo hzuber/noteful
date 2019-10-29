@@ -17,7 +17,6 @@ export default class AddFolder extends Component{
             date_modified: modified,
             folder_id: folder_id.value
         }
-        console.log('note is ' + note)
         
         fetch(`${config.API_ENDPOINT}/api/notes`, {
             method: 'POST',
@@ -55,7 +54,6 @@ export default class AddFolder extends Component{
         const whichFolder = folder ?
             <option value={folder.id}>{folder.name}</option> : 
             <option value="None">Select one...</option>;
-        console.log('whichFolder is ' + whichFolder)
         const chooseFolder = folders.map(folder => <option value={folder.id} key={folder.id}>{folder.name}</option>);
         const Required = () => (
             <span className='addNote-required'>*</span>

@@ -24,7 +24,6 @@ class EditNote extends Component {
     }
 
     componentDidMount(){
-        console.log('component mounted')
         const noteId = this.props.match.params.note_id;
         fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
             method: 'GET'
@@ -40,7 +39,6 @@ class EditNote extends Component {
                 content: res.content,
                 folder_id: res.folder_id
             })
-            console.log(this.state)
         })
         .catch(error => {
             this.setState({ error })
@@ -52,7 +50,6 @@ class EditNote extends Component {
         const { id, name, content, folder_id } = this.state;
         const newDate = new Date().toISOString();
         const newNote = { id, name, content, folder_id, date_modified: newDate }
-        console.log(newNote)
         fetch(`${config.API_ENDPOINT}/api/notes/${id}`, {
             method: 'PATCH',
             body: JSON.stringify(newNote),
